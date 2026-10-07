@@ -8,7 +8,7 @@
  */
 
 // The link that gets shared. Change this if the site lives somewhere else.
-var SHARE_URL = "https://les.shapeshifters.studio";
+var SHARE_URL = "https://shapeshifters.studio";
 
 var form = document.querySelector(".signup");
 var thanks = document.querySelector(".thanks");
