@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Les Shapeshifters</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="portal">
+      <!-- The logo is the page's one heading; alt text is what screen
+           readers announce instead of the image. -->
+      <h1 class="logo">
+        <img src="assets/logo_yellow.png" alt="Shapeshifters" width="901" height="377" />
+      </h1>
+
+      <!-- Plain form post to Brevo. Action URL and field names come from
+         Brevo's "Simple HTML" embed. -->
+      <form
+        class="signup"
+        method="POST"
+        action="https://20a7e648.sibforms.com/serve/MUIFAIdKzVWYaGKjAddULL8lWkIye2U1MkOi8RYZ7ReQoLIUZ1wPNW1QtQAxV4-1Jg6vVWXF67N8ZUoaXUd6UaHr7BRF0dTOfDS5PgQ3zXF3w1guFSqy_tflq4ghUI6BuanWjZjtUISyh0sr1bNKziefAkVwihLcjUFTFZgzb-GVW0v-BXD4i3o0iEN2mP9CsYH5bKMTdEeblU8Bag=="
+      >
+        <label for="email">Email address</label>
+        <input
+          id="email"
+          name="EMAIL"
+          type="email"
+          autocomplete="email"
+          required
+        />
+
+        <!-- Brevo's spam trap: hidden from people, bots fill it and get rejected. -->
+        <input
+          class="hidden"
+          type="text"
+          name="email_address_check"
+          value=""
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+        />
+        <input type="hidden" name="locale" value="en" />
+
+        <button type="submit">Join the Shapeshifters community</button>
+      </form>
+
+      <!-- Shown by main.js once Brevo confirms the signup; replaces the form. -->
+      <div class="thanks" hidden>
+        <button class="share" type="button">Send to a fellow shapeshifter</button>
+      </div>
+
+      <!-- Brevo's success or error message goes here. role="status" makes
+           screen readers announce it when it changes. -->
+      <p class="status" role="status"></p>
+    </main>
+
+    <script src="main.js"></script>
+
+    <!-- Oracle line along the bottom of the screen. -->
+    <footer class="oracle">
+      <p>
+        Rolling oracles, prayers and messages from our team, community and
+        mentors to show up here. Example;
+        <em>The otherworld is not far away. It is here, intertwined with this world</em>
+        - Eimear Burke
+      </p>
+    </footer>
+  </body>
+</html>

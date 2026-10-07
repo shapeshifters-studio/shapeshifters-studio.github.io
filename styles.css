@@ -1,0 +1,207 @@
+/* Brand fonts. Each one is tried in order: installed on the visitor's
+   computer, then a file in assets/fonts/. If neither exists the browser
+   falls back to the system fonts listed in --font-* below. */
+@font-face {
+  font-family: "Aspekta";
+  font-weight: 200;
+  src: local("Aspekta 200"), local("Aspekta-200"),
+       url("assets/fonts/Aspekta-200.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Aspekta";
+  font-weight: 300;
+  src: local("Aspekta 300"), local("Aspekta-300"),
+       url("assets/fonts/Aspekta-300.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IvyOra Display";
+  font-weight: 300;
+  font-style: italic;
+  src: local("IvyOra Display Light Italic"), local("IvyOraDisplay-LightItalic"),
+       url("assets/fonts/IvyOraDisplay-LightItalic.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* Brand guide colours. Only some are used yet; the rest are here so
+   they're ready. Contrast notes are for text on black. */
+:root {
+  --red: #b63a3a;
+  --sage: #afbab2;
+  --pink: #c1989a;
+  --blue: #81b1c5;
+  --grey: #d0d0d2;     /* body text, 13.6:1 */
+  --lavender: #8a90c0;
+  --brown: #5c3813;
+  --yellow: #d1bf48;   /* button + oracle line, 11.3:1; dark text on it 8.1:1 */
+  --olive: #596b32;
+  --ink: #252721;
+
+  --font-body: "Aspekta", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-highlight: "IvyOra Display", Georgia, "Times New Roman", serif;
+}
+
+/* Black page with the image pinned to the left, full height. */
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto; /* centre area, then the oracle line */
+  font-family: var(--font-body);
+  font-weight: 200;
+  color: var(--grey);
+  background: #000 url("assets/background.jpg") left center / auto 100% no-repeat;
+  background-attachment: fixed;
+}
+
+/* Centred column: logo, email field, button. */
+.portal {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+}
+
+.logo {
+  margin: 0;
+  width: min(85vw, 36rem);
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.signup {
+  display: grid;
+  gap: 0.75rem;
+  width: min(100%, 24rem);
+}
+
+label {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+input[type="email"] {
+  padding: 0.85rem 1rem;
+  font: inherit;
+  font-size: 1rem; /* 16px stops iOS zooming in when the field is tapped */
+  font-weight: 300;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--grey);
+  border-radius: 0;
+}
+
+button {
+  padding: 0.95rem 1rem;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--yellow);
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #e0cf5a;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* After signup: the share button takes the form's place, same width. */
+.thanks {
+  display: grid;
+  width: min(100%, 24rem);
+}
+
+/* Brevo's success/error text under the form. Empty until there's a message. */
+.status {
+  margin: 0;
+  min-height: 1.5em;
+  max-width: 24rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.status.is-error {
+  color: var(--pink); /* 8.2:1 on black */
+}
+
+/* Visible keyboard focus on the field and the button. */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* Make the hidden attribute win over display: grid above, so main.js can
+   swap the form for the share button. */
+[hidden] {
+  display: none !important;
+}
+
+/* Brevo's spam-trap field: off screen for people, still present for bots. */
+.hidden {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Bottom line. The black fade keeps it readable where it crosses the image. */
+.oracle {
+  padding: 2rem 1rem 1rem;
+  background: linear-gradient(to top, #000 40%, transparent);
+  color: var(--yellow);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.oracle p {
+  margin: 0;
+}
+
+/* The quote itself in the brand's "highlight words" face. */
+.oracle em {
+  font-family: var(--font-highlight);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.15em;
+  letter-spacing: 0.02em;
+}
+
+/* Phones and tablets: the image fills the whole screen behind the form, so darken
+   it for readability. Desktop has black space to the right instead. */
+@media (max-width: 1023px) {
+  body {
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+      #000 url("assets/background.jpg") left center / cover no-repeat;
+  }
+}
+
+@media (min-width: 768px) {
+  .oracle {
+    text-align: left;
+    padding-inline: 1.5rem;
+  }
+}
