@@ -36,6 +36,7 @@ form.addEventListener("submit", function (event) {
         thanks.hidden = false;
         showStatus(reply.message, false);
         shareButton.focus(); // keyboard users land on the next thing to do
+        shareRightAway();
       } else {
         showStatus(reply.message || "Something went wrong. Please try again.", true);
       }
@@ -53,23 +54,63 @@ form.addEventListener("submit", function (event) {
  * Share button: phones open the system share sheet (Messages, WhatsApp,
  * email...). Desktops usually don't have one, so the link is copied
  * instead and the button says so.
+ *
+ * Browsers only offer the share sheet and the modern clipboard on https
+ * pages, so copying falls back to an older method that also works on
+ * http, and as a last resort the link is shown to copy by hand.
  */
+function openShareSheet() {
+  return navigator.share({ title: "Les Shapeshifters", url: SHARE_URL });
+}
+
+function copyLink() {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(SHARE_URL);
+  }
+  // Older method: put the link in an off-screen text field, select it, copy.
+  return new Promise(function (resolve, reject) {
+    var field = document.createElement("textarea");
+    field.value = SHARE_URL;
+    field.readOnly = true;
+    field.className = "hidden";
+    document.body.appendChild(field);
+    field.select();
+    field.setSelectionRange(0, SHARE_URL.length); // needed on iOS
+    var copied = false;
+    try {
+      copied = document.execCommand("copy");
+    } catch (error) {}
+    field.remove();
+    if (copied) resolve();
+    else reject();
+  });
+}
+
 shareButton.addEventListener("click", function () {
   if (navigator.share) {
-    navigator.share({ title: "Les Shapeshifters", url: SHARE_URL }).catch(function () {
+    openShareSheet().catch(function () {
       // Cancelling the share sheet lands here; nothing to do.
     });
     return;
   }
 
-  navigator.clipboard.writeText(SHARE_URL).then(
+  copyLink().then(
     function () {
       shareButton.textContent = "Link copied";
       showStatus("Paste it to whoever you'd like to invite.", false);
     },
     function () {
-      // Clipboard blocked: show the link so it can be copied by hand.
       showStatus(SHARE_URL, false);
     }
   );
 });
+
+// Phones: open the share sheet straight after signing up. Some browsers
+// (Safari especially) only allow it straight after a tap and refuse here;
+// the share button is still on screen for that case.
+function shareRightAway() {
+  var isPhone = window.matchMedia("(pointer: coarse)").matches;
+  if (isPhone && navigator.share) {
+    openShareSheet().catch(function () {});
+  }
+}
