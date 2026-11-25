@@ -1,1 +1,6 @@
 .DS_Store
+
+# Source files kept locally; the site uses assets/web and assets/fonts
+assets/aspekta-main/
+assets/logo_chrome.png
+assets/video*.mp4

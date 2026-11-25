@@ -1,207 +1,315 @@
-/* Brand fonts. Each one is tried in order: installed on the visitor's
-   computer, then a file in assets/fonts/. If neither exists the browser
-   falls back to the system fonts listed in --font-* below. */
+/* One variable file covers every weight used here. */
 @font-face {
   font-family: "Aspekta";
-  font-weight: 200;
-  src: local("Aspekta 200"), local("Aspekta-200"),
-       url("assets/fonts/Aspekta-200.woff2") format("woff2");
-  font-display: swap;
+  font-weight: 100 900;
+  src: url("assets/fonts/AspektaVF.woff2") format("woff2");
+  font-display: block;
 }
 
-@font-face {
-  font-family: "Aspekta";
-  font-weight: 300;
-  src: local("Aspekta 300"), local("Aspekta-300"),
-       url("assets/fonts/Aspekta-300.woff2") format("woff2");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "IvyOra Display";
-  font-weight: 300;
-  font-style: italic;
-  src: local("IvyOra Display Light Italic"), local("IvyOraDisplay-LightItalic"),
-       url("assets/fonts/IvyOraDisplay-LightItalic.woff2") format("woff2");
-  font-display: swap;
-}
-
-/* Brand guide colours. Only some are used yet; the rest are here so
-   they're ready. Contrast notes are for text on black. */
+/* Sizes come from the Figma frames (1180 x 667), as vw so they keep the
+   same proportions on any screen, with floors so phones stay readable. */
 :root {
-  --red: #b63a3a;
-  --sage: #afbab2;
-  --pink: #c1989a;
-  --blue: #81b1c5;
-  --grey: #d0d0d2;     /* body text, 13.6:1 */
-  --lavender: #8a90c0;
-  --brown: #5c3813;
-  --yellow: #d1bf48;   /* button + oracle line, 11.3:1; dark text on it 8.1:1 */
-  --olive: #596b32;
-  --ink: #252721;
-
-  --font-body: "Aspekta", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-highlight: "IvyOra Display", Georgia, "Times New Roman", serif;
+  --red: #92222a; /* as in the frames */
+  --white: #fff;
+  --black: #000;
+  --pill: #aeaeaf;
+  --pill-text: #909090;
 }
 
-/* Black page with the image pinned to the left, full height. */
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
   margin: 0;
-  min-height: 100vh;
-  min-height: 100svh;
-  display: grid;
-  grid-template-rows: 1fr auto; /* centre area, then the oracle line */
-  font-family: var(--font-body);
-  font-weight: 200;
-  color: var(--grey);
-  background: #000 url("assets/background.jpg") left center / auto 100% no-repeat;
-  background-attachment: fixed;
+  height: 100%;
+  overflow: hidden;
+  background: var(--black);
 }
 
-/* Centred column: logo, email field, button. */
-.portal {
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 2rem;
-  padding: 2rem 1rem;
-}
-
-.logo {
-  margin: 0;
-  width: min(85vw, 36rem);
-}
-
-.logo img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.signup {
-  display: grid;
-  gap: 0.75rem;
-  width: min(100%, 24rem);
-}
-
-label {
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-input[type="email"] {
-  padding: 0.85rem 1rem;
-  font: inherit;
-  font-size: 1rem; /* 16px stops iOS zooming in when the field is tapped */
+body {
+  font-family: "Aspekta", system-ui, sans-serif;
   font-weight: 300;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid var(--grey);
-  border-radius: 0;
-}
-
-button {
-  padding: 0.95rem 1rem;
-  font: inherit;
-  font-size: 0.8rem;
-  font-weight: 300;
-  letter-spacing: 0.12em;
+  color: var(--white);
   text-transform: uppercase;
-  color: var(--ink);
-  background: var(--yellow);
-  border: 0;
-  border-radius: 0;
-  cursor: pointer;
+  -webkit-text-size-adjust: 100%;
 }
 
-button:hover {
-  background: #e0cf5a;
-}
-
-button:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-/* After signup: the share button takes the form's place, same width. */
-.thanks {
-  display: grid;
-  width: min(100%, 24rem);
-}
-
-/* Brevo's success/error text under the form. Empty until there's a message. */
-.status {
-  margin: 0;
-  min-height: 1.5em;
-  max-width: 24rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.status.is-error {
-  color: var(--pink); /* 8.2:1 on black */
-}
-
-/* Visible keyboard focus on the field and the button. */
-:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 3px;
-}
-
-/* Make the hidden attribute win over display: grid above, so main.js can
-   swap the form for the share button. */
 [hidden] {
   display: none !important;
 }
 
-/* Brevo's spam-trap field: off screen for people, still present for bots. */
-.hidden {
-  position: absolute;
-  left: -9999px;
+/* ---------- Films ---------- */
+
+/* lvh reaches under the phone browser's toolbars. */
+.films {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  height: 100lvh;
+  background: var(--black);
+  pointer-events: none;
 }
 
-/* Bottom line. The black fade keeps it readable where it crosses the image. */
-.oracle {
-  padding: 2rem 1rem 1rem;
-  background: linear-gradient(to top, #000 40%, transparent);
-  color: var(--yellow);
-  font-size: 0.7rem;
+.films video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--black);
+  opacity: 0;
+}
+
+/* The new video fades in on top of the one before it, which stays until covered. */
+.films video.under {
+  opacity: 1;
+}
+
+.films video.on {
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 600ms linear;
+}
+
+/* ---------- Top bar ---------- */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: max(1.25rem, 2.28vw) max(1rem, 2.5vw) 0 max(1rem, 1.99vw);
+  font-size: clamp(11px, 1.18vw, 20px);
+  font-weight: 400;
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 1200ms ease-in-out;
+  pointer-events: none;
+  /* White over dark footage, as designed; turns dark over light footage
+     (the white wall in video 3) so it never disappears. */
+  mix-blend-mode: difference;
+}
+
+.nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(calc(-50% + 0.6vw)); /* as placed in the frames */
+  white-space: nowrap;
+}
+
+/* ---------- Logo and red lines ---------- */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(72vw, 55vh, 34rem);
+  height: auto;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 1200ms ease-in-out; /* same as LOGO_FADE in main.js */
+}
+
+/* Spread edge to edge. Fits on one line: one line. Doesn't: two lines of
+   similar length (text-wrap: balance), both justified to the edges. */
+.line {
+  position: absolute;
+  top: 50.4%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  color: var(--red);
+  font-size: max(2.593vw, min(5vw, 22px)); /* frame size; larger floor on phones */
+  line-height: 1.23;
+  margin: 0;
+  text-align: justify;
+  text-align-last: justify;
+  text-wrap: balance;
+  hyphens: none;
+  opacity: 0;
+  transition: opacity 800ms ease-in-out;
+}
+
+/* After signing up, over the flower. */
+.thanks {
+  position: absolute;
+  inset: 0;
+  text-transform: none;
+  font-size: max(2.06vw, 18px);
+  font-weight: 550;
+  line-height: 1.2;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1200ms ease-in-out;
+}
+
+.thanks p {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  margin: 0;
+  transform: translateY(-50%);
+}
+
+.thanks-top {
+  top: 18%;
+}
+
+.thanks-bottom {
+  top: 78.2%;
+}
+
+.nav.show,
+.logo.show,
+.line.show,
+.thanks.show {
+  opacity: 1;
+}
+
+/* ---------- Enter the void ---------- */
+
+/* main.js shrinks this to the visible area when the phone keyboard opens. */
+.gate {
+  position: fixed;
+  top: var(--view-top, 0);
+  left: 0;
+  right: 0;
+  height: var(--view-height, 100%);
+  z-index: 3;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1200ms ease-in-out, visibility 0s linear 1200ms;
+}
+
+.gate.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1200ms ease-in-out, visibility 0s;
+}
+
+/* Exactly the width of the screen; flex keeps it centred if it runs over. */
+.gate h1 {
+  position: absolute;
+  top: 34.5%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  font-size: 12.9vw;
   font-weight: 300;
-  letter-spacing: 0.06em;
-  line-height: 1.6;
+  letter-spacing: -0.034em;
+  word-spacing: 0.26em;
+  line-height: 1;
+  white-space: nowrap;
+  transform: translateY(-50%);
+  filter: url(#grain);
+}
+
+.grain-def {
+  position: absolute;
+}
+
+.signup {
+  position: absolute;
+  top: 59.6%;
+  left: 50%;
+  width: clamp(260px, 23.2vw, 560px);
+  height: clamp(44px, 3.73vw, 72px);
+  transform: translate(-50%, -50%);
+}
+
+.signup input[type="email"] {
+  width: 100%;
+  height: 100%;
+  padding: 0 1.5em;
+  font: inherit;
+  font-size: max(0.88vw, 11px);
+  color: #333;
+  text-align: center;
+  text-transform: none; /* the email shows as typed */
+  background: var(--pill);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 2px 3px rgba(174, 174, 175, 0.6);
+  transition: opacity 200ms;
+}
+
+.signup input::placeholder {
+  color: var(--pill-text);
   text-transform: uppercase;
+  opacity: 1;
+}
+
+/* Focus shows as a lighter pill rather than a ring, to keep the design. */
+.signup input:focus {
+  outline: none;
+  background: #c8c8c9;
+}
+
+.signup.sending input {
+  opacity: 0.6;
+}
+
+/* Browsers paint saved emails on their own colour; keep the pill. */
+.signup input:-webkit-autofill {
+  -webkit-text-fill-color: #333;
+  -webkit-box-shadow: 0 0 0 100px var(--pill) inset;
+}
+
+/* Phones zoom into any field under 16px when it is tapped. */
+@media (pointer: coarse) {
+  .signup input[type="email"] {
+    font-size: 16px;
+  }
+}
+
+.error {
+  position: absolute;
+  top: calc(59.6% + clamp(22px, 1.87vw, 36px) + 0.9rem);
+  left: 1rem;
+  right: 1rem;
+  margin: 0;
+  font-size: max(0.88vw, 12px);
   text-align: center;
 }
 
-.oracle p {
-  margin: 0;
+/* ---------- Other ---------- */
+
+.tap {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  font: inherit;
+  color: var(--white);
+  background: transparent;
+  border: 0;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
-/* The quote itself in the brand's "highlight words" face. */
-.oracle em {
-  font-family: var(--font-highlight);
-  font-weight: 300;
-  font-style: italic;
-  font-size: 1.15em;
-  letter-spacing: 0.02em;
-}
-
-/* Phones and tablets: the image fills the whole screen behind the form, so darken
-   it for readability. Desktop has black space to the right instead. */
-@media (max-width: 1023px) {
-  body {
-    background:
-      linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-      #000 url("assets/background.jpg") left center / cover no-repeat;
-  }
-}
-
-@media (min-width: 768px) {
-  .oracle {
-    text-align: left;
-    padding-inline: 1.5rem;
-  }
+.hidden {
+  position: absolute;
+  left: -9999px;
 }

@@ -2,72 +2,131 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark" />
     <title>Les Shapeshifters</title>
-    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Black from the very first paint, before the stylesheet arrives. -->
+    <style>
+      html, body { background: #000; }
+    </style>
+    <link rel="preload" href="assets/web/logo_chrome.webp" as="image" />
+    <link
+      rel="preload"
+      href="assets/fonts/AspektaVF.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <!-- Bump ?v= when editing these files, so nobody gets an old cached copy
+         with a new page. GitHub Pages caches for 10 minutes. -->
+    <link rel="stylesheet" href="styles.css?v=5" />
+    <script src="main.js?v=5" defer></script>
+
+    <!-- Without JavaScript there is no sequence: show the signup on black. -->
+    <noscript>
+      <style>
+        .gate, .nav { opacity: 1; visibility: visible; }
+        .intro { display: none; }
+      </style>
+    </noscript>
   </head>
   <body>
-    <main class="portal">
-      <h1 class="logo">
-        <img
-          src="assets/logo_yellow.png"
-          alt="Shapeshifters"
-          width="901"
-          height="377"
-        />
-      </h1>
-
-      <!-- Plain form post to Brevo. Action URL and field names come from
-         Brevo's "Simple HTML" embed. -->
-      <form
-        class="signup"
-        method="POST"
-        action="https://20a7e648.sibforms.com/serve/MUIFAIdKzVWYaGKjAddULL8lWkIye2U1MkOi8RYZ7ReQoLIUZ1wPNW1QtQAxV4-1Jg6vVWXF67N8ZUoaXUd6UaHr7BRF0dTOfDS5PgQ3zXF3w1guFSqy_tflq4ghUI6BuanWjZjtUISyh0sr1bNKziefAkVwihLcjUFTFZgzb-GVW0v-BXD4i3o0iEN2mP9CsYH5bKMTdEeblU8Bag=="
-      >
-        <label for="email">Email address</label>
-        <input
-          id="email"
-          name="EMAIL"
-          type="email"
-          autocomplete="email"
-          required
-        />
-
-        <!-- Brevo's spam trap: hidden from people, bots fill it and get rejected. -->
-        <input
-          class="hidden"
-          type="text"
-          name="email_address_check"
-          value=""
-          tabindex="-1"
-          autocomplete="off"
-          aria-hidden="true"
-        />
-        <input type="hidden" name="locale" value="en" />
-
-        <button type="submit">Join the Shapeshifters community</button>
-      </form>
-
-      <!-- Shown by main.js once Brevo confirms the signup; replaces the form. -->
-      <div class="thanks" hidden>
-        <button class="share" type="button">
-          Send to a fellow shapeshifter
-        </button>
+    <main>
+      <!-- In playing order. main.js downloads them all before starting. -->
+      <div class="films" aria-hidden="true">
+        <video data-film="video1" muted playsinline disablepictureinpicture></video>
+        <video data-film="video2" muted playsinline disablepictureinpicture></video>
+        <video data-film="video3" muted playsinline disablepictureinpicture></video>
+        <video data-film="video_enter_the_void" muted playsinline disablepictureinpicture></video>
+        <video data-film="video_flor" muted playsinline disablepictureinpicture></video>
       </div>
 
-      <!-- Brevo's success or error message goes here. role="status" makes
-           screen readers announce it when it changes. -->
-      <p class="status" role="status"></p>
+      <!-- Shown from the first film on. The links have no destination yet. -->
+      <header class="nav">
+        <a>Contact</a>
+        <span class="nav-title">Les Shapeshifters</span>
+        <a>About</a>
+      </header>
+
+      <div class="intro" aria-hidden="true">
+        <img
+          class="logo"
+          src="assets/web/logo_chrome.webp"
+          alt="Shapeshifters"
+          width="1324"
+          height="1541"
+        />
+
+        <!-- Justified edge to edge: one line when the sentence fits,
+             otherwise two balanced lines (styles.css). -->
+        <p class="line" data-for="video1">The research lab for experimental anomaly</p>
+        <p class="line" data-for="video2">Generation across art philosophy and science</p>
+        <p class="line" data-for="video3">A community of shapeshifters is underway</p>
+
+        <!-- Shown over the flower after signing up.
+             PLACEHOLDER COPY from the design: replace before publishing. -->
+        <div class="thanks">
+          <p class="thanks-top">Thank you message + DATE of realese</p>
+          <p class="thanks-bottom">You are shapeshifter nr.30</p>
+        </div>
+      </div>
+
+      <section class="gate" aria-labelledby="gate-title">
+        <h1 id="gate-title">Enter the void</h1>
+
+        <!-- The grainy edge on the title. main.js scales it with the text. -->
+        <svg class="grain-def" width="0" height="0" aria-hidden="true">
+          <filter id="grain" x="-2%" y="-10%" width="104%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </svg>
+
+        <!-- Action URL and field names come from Brevo's "Simple HTML" embed. -->
+        <form
+          class="signup"
+          method="POST"
+          action="https://20a7e648.sibforms.com/serve/MUIFAIdKzVWYaGKjAddULL8lWkIye2U1MkOi8RYZ7ReQoLIUZ1wPNW1QtQAxV4-1Jg6vVWXF67N8ZUoaXUd6UaHr7BRF0dTOfDS5PgQ3zXF3w1guFSqy_tflq4ghUI6BuanWjZjtUISyh0sr1bNKziefAkVwihLcjUFTFZgzb-GVW0v-BXD4i3o0iEN2mP9CsYH5bKMTdEeblU8Bag=="
+        >
+          <label class="hidden" for="email">Email address</label>
+          <input
+            id="email"
+            name="EMAIL"
+            type="email"
+            autocomplete="email"
+            placeholder="Enter your email"
+            enterkeyhint="go"
+            required
+          />
+
+          <!-- Brevo's spam trap: hidden from people, bots fill it and get rejected. -->
+          <input
+            class="hidden"
+            type="text"
+            name="email_address_check"
+            value=""
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          />
+          <input type="hidden" name="locale" value="en" />
+
+          <!-- Not shown, as in the design: Enter submits. Kept so it works everywhere. -->
+          <button class="hidden" type="submit" tabindex="-1">Enter the void</button>
+        </form>
+
+        <p class="error" role="alert"></p>
+      </section>
+
+      <p class="hidden announce" role="status"></p>
+
+      <!-- Only appears if the browser refuses autoplay, e.g. iPhone Low Power Mode. -->
+      <button class="tap" type="button" hidden>Tap to enter</button>
     </main>
-
-    <script src="main.js"></script>
-
-    <!-- Oracle line along the bottom of the screen. -->
-    <footer class="oracle">
-      <p>
-        The otherworld is not far away. It is here, intertwined with this world
-        - Eimear Burke
-      </p>
-    </footer>
   </body>
 </html>
